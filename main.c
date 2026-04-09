@@ -119,38 +119,50 @@ void zero_matrix(char matrix[SIZE+1][SIZE+1]) {
 void load_matrices(char friendly[SIZE+1][SIZE+1], char enemy[SIZE+1][SIZE+1],int *f_board,int *e_board) {
     srand(time(NULL));
     *f_board = rand()%4;
-    if (*f_board == 0) {
-        for (int i = 0; i < 3; i++) friendly[2][i+1] = 'F';
-        for (int i = 0; i < 3; i++) friendly[i+4][4] = 'F';
-    }
-    if (*f_board == 1) {
-        for (int i = 0; i < 3; i++) friendly[1][i+2] = 'F';
-        for (int i = 0; i < 3; i++) friendly[i+1][6] = 'F';
-    }
-    if (*f_board == 2) {
-        for (int i = 0; i < 3; i++) friendly[i+3][1] = 'F';
-        for (int i = 0; i < 3; i++) friendly[i+1][5] = 'F';
-    }
-    if (*f_board == 3) {
-        for (int i = 0; i < 3; i++) friendly[3][i+1] = 'F';
-        for (int i = 0; i < 3; i++) friendly[1][i+4] = 'F';
+    switch (*f_board) {
+        case 0: {
+            for (int i = 0; i < 3; i++) friendly[2][i+1] = 'F';
+            for (int i = 0; i < 3; i++) friendly[i+4][4] = 'F';
+            break;
+        }
+        case 1: {
+            for (int i = 0; i < 3; i++) friendly[1][i+2] = 'F';
+            for (int i = 0; i < 3; i++) friendly[i+1][6] = 'F';
+            break;
+        }
+        case 2: {
+            for (int i = 0; i < 3; i++) friendly[i+3][1] = 'F';
+            for (int i = 0; i < 3; i++) friendly[i+1][5] = 'F';
+            break;
+        }
+        case 3: {
+            for (int i = 0; i < 3; i++) friendly[3][i+1] = 'F';
+            for (int i = 0; i < 3; i++) friendly[1][i+4] = 'F';
+            break;
+        }
     }
     *e_board = rand()%4;
-    if (*e_board == 0) {
-        for (int i = 0; i < 3; i++) enemy[3][i+1] = 'E';
-        for (int i = 0; i < 3; i++) enemy[i+4][5] = 'E';
-    }
-    if (*e_board == 1) {
-        for (int i = 0; i < 3; i++) enemy[1][i+1] = 'E';
-        for (int i = 0; i < 3; i++) enemy[i+3][6] = 'E';
-    }
-    if (*e_board == 2) {
-        for (int i = 0; i < 3; i++) enemy[i+1][2] = 'E';
-        for (int i = 0; i < 3; i++) enemy[i+2][5] = 'E';
-    }
-    if (*e_board == 3) {
-        for (int i = 0; i < 3; i++) enemy[5][i+1] = 'E';
-        for (int i = 0; i < 3; i++) enemy[1][i+3] = 'E';
+    switch (*e_board) {
+        case 0: {
+            for (int i = 0; i < 3; i++) enemy[3][i+1] = 'E';
+            for (int i = 0; i < 3; i++) enemy[i+4][5] = 'E';
+            break;
+        }
+        case 1: {
+            for (int i = 0; i < 3; i++) enemy[1][i+1] = 'E';
+            for (int i = 0; i < 3; i++) enemy[i+3][6] = 'E';
+            break;
+        }
+        case 2: {
+            for (int i = 0; i < 3; i++) enemy[i+1][2] = 'E';
+            for (int i = 0; i < 3; i++) enemy[i+2][5] = 'E';
+            break;
+        }
+        case 3: {
+            for (int i = 0; i < 3; i++) enemy[5][i+1] = 'E';
+            for (int i = 0; i < 3; i++) enemy[1][i+3] = 'E';
+            break;
+        }
     }
 }
 
@@ -286,7 +298,7 @@ void enemy_turn(char friendly[SIZE+1][SIZE+1], int f_board, int *e_counter, int 
         friendly[row][col] = '0';
         last_shot[2] = 0;
     }
-    if (friendly[row][col] == 'F') {
+    else if (friendly[row][col] == 'F') {
         friendly[row][col] = 'X';
         last_shot[2] = 1;
         (*e_counter)++;
